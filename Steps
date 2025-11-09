@@ -1,0 +1,73 @@
+STEPS:
+Step 1: Login to AWS Management Console
+1.	Open https://aws.amazon.com.
+2.	Click Sign in to the Console.
+3.	Enter your Email / IAM user and Password.
+4.	Once logged in, you’ll see the AWS Management Console Dashboard.
+ 
+
+
+
+
+
+
+Step 2: Create a Virtual Private Cloud (VPC)
+1.	Go to VPC → Your VPCs → Create VPC.
+2.	Choose VPC only option.
+3.	Set:
+o	Name: MyVPC
+o	IPv4 CIDR: 10.0.0.0/16
+4.	Click Create VPC.
+ 
+Step 3: Create a Public Subnet
+1.	Go to Subnets → Create Subnet.
+2.	Select the VPC created earlier (MyVPC).
+3.	Add:
+o	Subnet Name: PublicSubnet
+o	IPv4 CIDR block: 10.0.1.0/24
+o	Availability Zone:  ap-south-1a
+4.	Click Create Subnet.
+ 
+Step 4: Create and Attach Internet Gateway
+1.	Go to Internet Gateways → Create Internet Gateway.
+2.	Name it MyIGW and click Create.
+3.	Select Actions → Attach to VPC → MyVPC.
+ 
+Step 5: Configure Route Table
+1.	Go to Route Tables.
+2.	Select the default route table linked with your VPC.
+3.	Go to Routes → Edit routes → Add route:
+o	Destination: 0.0.0.0/0
+o	Target: Internet Gateway (MyIGW)
+4.	Save the route.
+5.	Go to Subnet Associations → Edit Subnet Associations → select PublicSubnet → Save.
+ 
+Step 6: Launch Windows Server EC2 Instance
+1.	Go to EC2 → Launch Instance.
+2.	Enter name: WindowsServer-Lab.
+3.	Choose Windows Server 2022 Base AMI.
+4.	Select t2.micro instance type (free tier).
+5.	Under Network Settings:
+o	Select MyVPC.
+o	Select PublicSubnet.
+o	Enable Auto-assign Public IP.
+6.	Create a new Security Group:
+o	Allow RDP (TCP 3389) from My IP.
+7.	Choose or create a Key Pair (download .pem file).
+8.	Click Launch Instance.
+ 
+ 
+Step 7: Verify the Instance
+1.	Go to EC2 → Instances → Running Instances.
+2.	Wait until Status = Running.
+3.	Note down the Public IPv4 address.
+ 
+ 
+ 
+ 
+
+Step 9: Verify Connectivity
+1.	Open Command Prompt or Browser inside the server.
+2.	Try pinging any website (e.g., ping google.com) or open a browser to verify internet access.
+ 
+
